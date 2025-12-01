@@ -42,8 +42,23 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    b.installArtifact(exe);
+    const install_step = b.addInstallArtifact(exe, .{});
 
     exe.entry = .{ .symbol_name = "_start" };
     exe.setLinkerScript(b.path("src/link.ld"));
+
+    const bin_path = exe.installed_path orelse "zig-out/bin/kernel";
+
+    const run_cmd = b.addSystemCommand(&.{
+        "qemu-system-riscv64",
+        "-machine", "virt",
+        "-kernel", bin_path,
+        "-nographic",
+    });
+
+    run_cmd.step.dependOn(&install_step.step);
+
+    const run_step = b.step("run", "Run the kernel in QEMU");
+    run_step.dependOn(&run_cmd.step);
 }
+

@@ -13,5 +13,5 @@ pub export fn _start() linksection(".text.start") noreturn {
 fn kmain() !void {
     var w = console.writer(&.{});
     console.clear_screen();
-    try w.print("Hello, {s}!\n", .{"RISC-V Kernel"});
+    try w.print("Hello, {s}!\n", .{"RISC-V"});
 }
