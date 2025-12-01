@@ -21,3 +21,6 @@ Or you can run it directly with Zig using:
 ```bash
 zig build run
 ```
+
+## Editing the Run Script
+The `run_qemu.sh` script is set up to run the compiled kernel in QEMU with RISC-V architecture. You can modify the script to change QEMU options, such as memory size, CPU type, or additional devices. This script is run when you execute `zig build run`, so it makes it easy to test your kernel in a custom environment.

@@ -50,10 +50,9 @@ pub fn build(b: *std.Build) void {
     const bin_path = exe.installed_path orelse "zig-out/bin/kernel";
 
     const run_cmd = b.addSystemCommand(&.{
-        "qemu-system-riscv64",
-        "-machine", "virt",
-        "-kernel", bin_path,
-        "-nographic",
+        "sh", 
+        "run-qemu.sh",
+        bin_path,
     });
 
     run_cmd.step.dependOn(&install_step.step);
